@@ -1,0 +1,86 @@
+/* ─────────────────────────────────────────────────────────
+   VIU News-Wall – Basis-Styles
+   
+   Hier sind ein paar CSS Custom Properties und ein minimaler
+   Reset vorbereitet. Du kannst diese Datei erweitern oder
+   eigene CSS-Dateien für deine Komponenten erstellen.
+   ───────────────────────────────────────────────────────── */
+
+:root {
+  /* VIU Farben */
+  --viu-primary: #0f4c81;
+  --viu-primary-light: #1a6bb5;
+  --viu-accent: #e63946;
+  --viu-bg: #f5f7fa;
+  --viu-card-bg: #ffffff;
+  --viu-text: #1a1a2e;
+  --viu-text-light: #6c757d;
+  --viu-border: #dee2e6;
+  --viu-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --viu-radius: 8px;
+
+  /* Kategorie-Farben */
+  --color-event: #e63946;
+  --color-projekt: #2a9d8f;
+  --color-info: #457b9d;
+}
+
+/* ── Reset ────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--viu-bg);
+  color: var(--viu-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── App Layout ───────────────────────────────────────── */
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--viu-primary);
+  margin-bottom: 0.25rem;
+}
+
+.app-subtitle {
+  color: var(--viu-text-light);
+  font-size: 1rem;
+}
+
+.app-main {
+  min-height: 300px;
+}
+
+/* ── Status Messages ──────────────────────────────────── */
+
+.status-message {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--viu-text-light);
+  font-size: 1.1rem;
+}
+
+.status-message.error {
+  color: var(--viu-accent);
+}
