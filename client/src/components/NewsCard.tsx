@@ -37,11 +37,11 @@ export function NewsCard({ item }: NewsCardProps) {
         <CardMedia
           component="img"
           height="160"
-          //image={item.imageUrl}
-          image="../../../hund.jpg"
+          image={JSON.parse(item.imageUrl).serverUrl+JSON.parse(item.imageUrl).serverRelativeUrl}
+          //image="../../../hund.jpg"
           alt={item.title}
-        />
-      )}
+          />
+        )}
 
       <CardContent>
         <Chip

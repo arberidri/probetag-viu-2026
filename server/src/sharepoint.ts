@@ -1,3 +1,4 @@
+import { Console } from "console";
 import { getAccessToken } from "./auth.js";
 
 // ────────────────────────────────────────────────────────
@@ -81,8 +82,7 @@ function mapToNewsItem(raw: GraphListItemsResponse["value"][number]): NewsItem {
   let imageUrl: string | null = null;
   if (typeof f.Bild === "string" && f.Bild) {
     imageUrl = f.Bild;
-        console.log("Bild-URL f+bild:", imageUrl);
-
+    console.log("Bild als String:", imageUrl);
   } else if (typeof f.Bild === "object" && f.Bild?.Url) {
     imageUrl = f.Bild.Url;
     console.log("Bild-URL f+bild+url:", imageUrl);
@@ -103,9 +103,7 @@ function validateCategory(
 ): NewsItem["category"] {
   const allowed: NewsItem["category"][] = ["Event", "Projekt", "Info"];
   if (value && allowed.includes(value as NewsItem["category"])) {
-    console.log("Kategorie war gültig:", value);
     return value as NewsItem["category"];
   }
-  console.log("Ungültige Kategorie:", value);
   return "Event"; // Fallback
 }

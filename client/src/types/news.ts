@@ -23,4 +23,6 @@ export interface NewsItem {
 
   /** Erstellungsdatum als ISO-8601 String, z.B. "2026-03-10T09:30:00Z" */
   createdAt: string;
+
+  likes: number; 
 }
