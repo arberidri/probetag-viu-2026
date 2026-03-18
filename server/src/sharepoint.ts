@@ -37,6 +37,7 @@ interface GraphListItemsResponse {
 const GRAPH_BASE = "https://graph.microsoft.com/v1.0";
 
 function buildListItemsUrl(): string {
+  console.log("Build Link war erfolgreich")
   const siteId = process.env.SHAREPOINT_SITE_ID!;
   const listId = process.env.SHAREPOINT_NEWS_LIST_ID!;
   return `${GRAPH_BASE}/sites/${siteId}/lists/${listId}/items?$expand=fields&$top=50`;
@@ -49,16 +50,20 @@ function buildListItemsUrl(): string {
 export async function getNewsItems(): Promise<NewsItem[]> {
   const token = await getAccessToken();
 
+  
   const res = await fetch(buildListItemsUrl(), {
     headers: { Authorization: `Bearer ${token}` },
   });
-
+  
+  
   if (!res.ok) {
     const body = await res.text();
+    console.log("body", body);
     throw new Error(
       `Graph API Fehler ${res.status}: ${body.substring(0, 500)}`
     );
   }
+  
 
   const data: GraphListItemsResponse = await res.json();
 
@@ -76,8 +81,11 @@ function mapToNewsItem(raw: GraphListItemsResponse["value"][number]): NewsItem {
   let imageUrl: string | null = null;
   if (typeof f.Bild === "string" && f.Bild) {
     imageUrl = f.Bild;
+        console.log("Bild-URL f+bild:", imageUrl);
+
   } else if (typeof f.Bild === "object" && f.Bild?.Url) {
     imageUrl = f.Bild.Url;
+    console.log("Bild-URL f+bild+url:", imageUrl);
   }
 
   return {
@@ -95,7 +103,9 @@ function validateCategory(
 ): NewsItem["category"] {
   const allowed: NewsItem["category"][] = ["Event", "Projekt", "Info"];
   if (value && allowed.includes(value as NewsItem["category"])) {
+    console.log("Kategorie war gültig:", value);
     return value as NewsItem["category"];
   }
-  return "Info"; // Fallback
+  console.log("Ungültige Kategorie:", value);
+  return "Event"; // Fallback
 }

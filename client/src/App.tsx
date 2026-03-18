@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchNews } from "./services/newsService";
 import type { NewsItem } from "./types/news";
+import { NewsList } from "./components/NewsList";
 
 function App() {
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -30,7 +31,7 @@ function App() {
       <main className="app-main">
         {/* ──────────────────────────────────────────────
             DEINE KOMPONENTEN HIER
-            
+
             Du hast Zugriff auf:
             - news:    NewsItem[]   → Die News-Einträge
             - loading: boolean      → true während geladen wird
@@ -39,6 +40,8 @@ function App() {
             Erstelle z.B. <NewsList /> und <NewsCard /> Komponenten
             im Ordner src/components/
             ────────────────────────────────────────────── */}
+
+        <NewsList news={news} />
 
         {loading && <p>Lade News…</p>}
         {error && <p style={{ color: "red" }}>Fehler: {error}</p>}

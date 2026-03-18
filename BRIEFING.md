@@ -161,3 +161,7 @@ client/src/
 ---
 
 Viel Erfolg – und bei Fragen einfach melden! 💪
+
+
+
+url zusammenstellung :serverUrl + serverRelativeUrl
