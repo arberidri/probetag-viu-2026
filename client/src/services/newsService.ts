@@ -16,3 +16,17 @@ export async function fetchNews(): Promise<NewsItem[]> {
   const data: NewsItem[] = await response.json();
   return data;
 }
+
+
+export async function likeNews(id: string): Promise<void> {
+  const response = await fetch(`/api/news/${id}/like`, {
+    method: "POST",
+  });
+  body: JSON.stringify({
+    Likes: { Value: 1 }
+  })
+
+  if (!response.ok) {
+    throw new Error(`Fehler beim liken der News (HTTP ${response.status})`);
+  }
+}

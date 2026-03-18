@@ -1,9 +1,12 @@
-import { NewsItem } from "../types/news";
+import { NewsItem} from "../types/news";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
+import { likeNews } from "../services/newsService";
+import "../App.css";
 
 type NewsCardProps = {
   item: NewsItem;
@@ -43,28 +46,34 @@ export function NewsCard({ item }: NewsCardProps) {
           />
         )}
 
-      <CardContent>
-        <Chip
-          label={category}
-          size="small"
-          sx={{
-            backgroundColor: categoryColors[category],
-            color: "#fff",
-            mb: 1,
-          }}
-        />
+      <CardContent sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+        <Box sx={{ flex: 1 }}>
+          <Chip
+            label={category}
+            size="small"
+            sx={{
+              backgroundColor: categoryColors[category],
+              color: "#fff",
+              mb: 1,
+            }}
+          />
 
-        <Typography variant="h6" component="h3" gutterBottom>
-          {item.title}
-        </Typography>
+          <Typography variant="h6" component="h3" gutterBottom>
+            {item.title}
+          </Typography>
 
-        <Typography variant="body2" color="text.secondary" paragraph>
-          {item.content}
-        </Typography>
+          <Typography variant="body2" color="text.secondary" paragraph>
+            {item.content}
+          </Typography>
 
-        <Typography variant="caption" color="text.secondary">
-          {new Date(item.createdAt).toLocaleDateString()}
-        </Typography>
+          <Typography variant="caption" color="text.secondary">
+            {new Date(item.createdAt).toLocaleDateString()}
+          </Typography>
+        </Box>
+
+        <button className="likebutton" onClick={() => likeNews(item.id)}>
+          Likes {item.likes}
+        </button>
       </CardContent>
     </Card>
   );

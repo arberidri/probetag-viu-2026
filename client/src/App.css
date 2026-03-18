@@ -84,3 +84,24 @@ body {
 .status-message.error {
   color: var(--viu-accent);
 }
+
+.likebutton {
+  cursor: pointer;
+  background: var(--viu-accent, #ff4081);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--viu-radius, 8px);
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  align-items: right;
+}
+
+.likebutton:hover {
+  background: var(--viu-accent-hover, #e91e63);
+}
+
+.likebutton:active {
+  transform: scale(0.98);
+}

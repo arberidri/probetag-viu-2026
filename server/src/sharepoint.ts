@@ -13,6 +13,7 @@ export interface NewsItem {
   category: "Event" | "Projekt" | "Info";
   imageUrl: string | null;
   createdAt: string; // ISO-8601
+  likes: number; 
 }
 
 /** Roh-Felder, wie sie aus der Graph API kommen (ListItem.fields). */
@@ -21,6 +22,7 @@ interface SharePointFields {
   Inhalt?: string;
   Kategorie?: string;
   Bild?: { Url?: string } | string;
+  Likes?: number;
 }
 
 interface GraphListItemsResponse {
@@ -71,11 +73,47 @@ export async function getNewsItems(): Promise<NewsItem[]> {
   return data.value.map((item) => mapToNewsItem(item));
 }
 
+
+
 // ────────────────────────────────────────────────────────
 //  Mapping  Graph → NewsItem
 // ────────────────────────────────────────────────────────
+export async function likeNews(id: string): Promise<void> {
+  const token = await getAccessToken();
+  const url = `${GRAPH_BASE}/sites/${process.env.SHAREPOINT_SITE_ID}/lists/${process.env.SHAREPOINT_NEWS_LIST_ID}/items/${id}/fields`;
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      Likes: { Value: 1 }
+    })
+  });
 
-function mapToNewsItem(raw: GraphListItemsResponse["value"][number]): NewsItem {
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(
+      `Graph API Fehler ${res.status}: ${body.substring(0, 500)}`
+    );
+  }
+  let updatedItem = await res.json();
+  updatedItem.likes++;
+  Body: JSON.stringify({
+    Likes: { Value: updatedItem.likes }
+  })
+
+   
+}
+
+
+
+
+
+
+
+  function mapToNewsItem(raw: GraphListItemsResponse["value"][number]): NewsItem {
   const f = raw.fields;
 
   // Bild kann als Objekt {Url:""} oder als reiner String kommen
@@ -95,6 +133,7 @@ function mapToNewsItem(raw: GraphListItemsResponse["value"][number]): NewsItem {
     category: validateCategory(f.Kategorie),
     imageUrl,
     createdAt: raw.createdDateTime,
+    likes: f.Likes ?? 0,
   };
 }
 

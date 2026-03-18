@@ -9,6 +9,7 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 import express from "express";
 import cors from "cors";
 import { getNewsItems } from "./sharepoint.js";
+import { CANCELLED } from "dns";
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3001;
@@ -35,6 +36,22 @@ app.get("/api/news", async (_req, res) => {
 /** Health-Check */
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
+app.patch("/api/news/:id/like", async (req, res) => {
+  const { id } = req.params;
+  console.log(`ID ${id} wurde geliked (POST /api/news/${id}/like)`);
+  res.json({ status: "ok" });
+  try {
+      const postlike = await likeNews(id);
+  } catch (err) {
+    console.error(` Fehler beim like ${id}:`, err);
+    res.status(500).json({
+      error: "News konnte nicht geliked werden.",
+      details: err instanceof Error ? err.message : String(err),
+    });
+  }
+
 });
 
 // ──────────────────────────────── Start ─────────────────────────────────────
