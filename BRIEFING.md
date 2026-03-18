@@ -4,6 +4,8 @@ Willkommen zum Probetag! Du baust heute eine kleine Web-App, die **Team-News aus
 
 Die SharePoint-Anbindung (Authentifizierung, API-Calls) ist bereits fertig. Du kannst dich voll auf das **Frontend** konzentrieren.
 
+Die Daten kommen aus dieser SharePoint-Liste: [TeamNews](https://steinbloc.sharepoint.com/sites/viu-probetag-2026/Lists/TeamNews)
+
 ---
 
 ## 🚀 Setup
