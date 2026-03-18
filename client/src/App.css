@@ -87,7 +87,7 @@ body {
 
 .likebutton {
   cursor: pointer;
-  background: var(--viu-accent, #ff4081);
+  background:  #ff4081;
   color: #fff;
   border: none;
   padding: 0.5rem 1rem;
@@ -99,7 +99,7 @@ body {
 }
 
 .likebutton:hover {
-  background: var(--viu-accent-hover, #e91e63);
+  background: #e91e63;
 }
 
 .likebutton:active {
